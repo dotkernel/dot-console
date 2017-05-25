@@ -1,0 +1,41 @@
+{
+  "name": "dotkernel/dot-console",
+  "description": "DotKernel component for creating console applications based on zf-console",
+  "authors": [
+    {
+      "name": "n3vrax",
+      "email": "tibi@apidemia.com"
+    }
+  ],
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "console",
+    "dotkernel"
+  ],
+  "require": {
+    "php": "^7.1",
+    "zendframework/zend-servicemanager": "^3.3",
+    "zfcampus/zf-console": "^1.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.7",
+    "squizlabs/php_codesniffer": "^2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dot\\Console\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DotTest\\Console\\": "tests"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1-dev",
+      "dev-develop": "0.2-dev"
+    }
+  }
+}
