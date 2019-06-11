@@ -83,7 +83,7 @@ public function __invoke(Route $route, AdapterInterface $console)
 
 Command classes are pulled from the container, so you might inject your commands with dependencies.
 
-### 'Hello Word!' command example
+### 'Hello World!' command example
 #### Create HelloCommand class
 
 ```php
@@ -116,15 +116,19 @@ Update the console configuration to include this command
 'commands' => [
     [
         'name' => 'hello',
-        'description' => 'Hello, World! command example',
+        'description' => 'Hello, World! command full description',
+        'short_description' => 'Hello, World! command short description',
         'handler' => HelloCommand::class,
     ],
 ]
 //...
 ```
+Please note that the content of:
+- `description` is displayed when the command is executed
+- `short_description` is displayed when the list of available commands is executed
 
 #### Testing command 
-In comand line, go to project root directory and type folowing command
+In cmomand line, go to project root directory and type following command
 ```bash
 $ php ./bin/console.php hello
 ```
