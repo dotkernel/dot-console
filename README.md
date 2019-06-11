@@ -17,7 +17,7 @@ $ composer require dotkernel/dot-console
 Next, register the package's `ConfigProvider` to your application config. If can also manually register the package's dependencies in your container. There is only one dependency that need to be registered `Dot\Console\Factory\ApplicationFactory` that should be used to create an `ZF\Console\Application` object used to bootstrap the app.
 
 ### Configuration and Usage
-You should create a bootstrap file in your project, similar to index.php, that will be called from the command line to start console commands. We advise you to create a `bin` folder in your project's root folder. Here you can create a `console.php` file with the following content.
+You should create a bootstrap file in your project, similar to `index.php`, that will be called from the command line to start console commands. We advise you to create a `bin` folder in your project's root folder. Here you can create a `console.php` file with the following content.
 ```php
 /**
  * Console application bootstrap file
@@ -75,8 +75,8 @@ return [
     ]
 ];
 ```
-The second is an abstract class that you commands should extend. This class forces the `__invoke` method with the proper parameter definition that defines console commands.
-Commands must be invokable classes with the following signature
+The second thing is an abstract class that you commands should extend. This class forces the `__invoke` method with the proper parameter definition that defines console commands.
+Commands must be invokable classes with the following signature:
 ```php
 public function __invoke(Route $route, AdapterInterface $console)
 ```
@@ -125,10 +125,10 @@ Update the console configuration to include this command
 ```
 Please note that the content of:
 - `description` is displayed when the command is executed
-- `short_description` is displayed when the list of available commands is executed
+- `short_description` is displayed when the list of available commands is executed or getting help for a specific command
 
 #### Testing command 
-In cmomand line, go to project root directory and type following command
+In command line, go to your project's root directory and type the following command:
 ```bash
 $ php ./bin/console.php hello
 ```
