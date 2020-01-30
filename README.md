@@ -4,7 +4,7 @@ DotKernel component to build console applications based on zf-console
 
 ### Requirements
 - PHP >= 7.1
-- zendframework/zend-servicemanager >= 3.3,
+- laminas/laminas-servicemanager >= 3.3,
 - zfcampus/zf-console >= 1.3
 
 
@@ -42,7 +42,7 @@ call_user_func(function () {
 });
 ```
 
-This assumes you are using one of our web starter applications or a Zend Expressive similarly structured application.
+This assumes you are using one of our web starter applications or a Mezzio similarly structured application.
 Next you can go to the command line and call console commands
 
 ```bash
@@ -89,7 +89,7 @@ Command classes are pulled from the container, so you might inject your commands
 ```php
 
 use Dot\Console\Command\AbstractCommand;
-use Zend\Console\Adapter\AdapterInterface;
+use Laminas\Console\Adapter\AdapterInterface;
 use ZF\Console\Route;
 
 class HelloCommand extends AbstractCommand

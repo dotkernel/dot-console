@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Dot\Console\Factory;
 
 use Psr\Container\ContainerInterface;
-use Zend\Console\Console;
+use Laminas\Console\Console;
 use ZF\Console\Application;
 use ZF\Console\Dispatcher;
 
