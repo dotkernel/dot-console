@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Dot\Console\Factory;
 
+use Dot\Console\Dispatcher;
 use Psr\Container\ContainerInterface;
 use Laminas\Console\Console;
-use ZF\Console\Application;
-use ZF\Console\Dispatcher;
+use Dot\Console\Application;
 
 /**
  * Class ApplicationFactory
@@ -36,7 +36,6 @@ class ApplicationFactory
             $dispatcher
         );
 
-        $app->setDebug($container->get('config')['debug']);
         return $app;
     }
 }

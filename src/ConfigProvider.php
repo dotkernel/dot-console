@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Dot\Console;
 
 use Dot\Console\Factory\ApplicationFactory;
-use ZF\Console\Application;
+use Dot\Console\Application;
 
 /**
  * Class ConfigProvider
@@ -24,7 +24,7 @@ class ConfigProvider
             'dependencies' => $this->getDependencies(),
 
             'dot_console' => [
-                'version' => '1.0.0',
+                'version' => '3.0.0',
                 'name' => 'DotKernel Console',
                 'commands' => [
 

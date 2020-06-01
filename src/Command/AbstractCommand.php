@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Dot\Console\Command;
 
 use Laminas\Console\Adapter\AdapterInterface;
-use ZF\Console\Route;
+use Dot\Console\RouteCollector as Route;
 
 /**
  * Class AbstractCommand

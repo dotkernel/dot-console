@@ -1,11 +1,11 @@
 # dot-console
 
-DotKernel component to build console applications based on zf-console
+DotKernel component to build console applications based on laminas-console
 
 ### Requirements
-- PHP >= 7.1
+- PHP >= 7.4
 - laminas/laminas-servicemanager >= 3.3,
-- zfcampus/zf-console >= 1.3
+- laminas/laminas-console >= 2.8
 
 
 ### Installation
@@ -14,7 +14,7 @@ Run the following command in your project root directory
 $ composer require dotkernel/dot-console
 ```
 
-Next, register the package's `ConfigProvider` to your application config. If can also manually register the package's dependencies in your container. There is only one dependency that need to be registered `Dot\Console\Factory\ApplicationFactory` that should be used to create an `ZF\Console\Application` object used to bootstrap the app.
+Next, register the package's `ConfigProvider` to your application config. If can also manually register the package's dependencies in your container. There is only one dependency that need to be registered `Dot\Console\Factory\ApplicationFactory` that should be used to create an `Laminas\Console\Application` object used to bootstrap the app.
 
 ### Configuration and Usage
 You should create a bootstrap file in your project, similar to `index.php`, that will be called from the command line to start console commands. We advise you to create a `bin` folder in your project's root folder. Here you can create a `console.php` file with the following content.
