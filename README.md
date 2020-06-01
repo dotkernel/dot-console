@@ -22,7 +22,7 @@ You should create a bootstrap file in your project, similar to `index.php`, that
 /**
  * Console application bootstrap file
  */
-use ZF\Console\Application;
+use Dot\Console\Application;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
@@ -56,12 +56,12 @@ $ php bin/console.php help
 
 ### Creating commands
 
-dot-console is mainly a wrapper around [zf-console](https://github.com/zfcampus/zf-console). You should check their full documentation before.
+dot-console is mainly a wrapper around [laminas-console](https://github.com/laminas/laminas-console). You should check their full documentation before.
 Why a wrapper?
 * it allows us to extend the original package if we need
 * we can simplify some things
 
-The first thing this package offers, is the `ZF\Console\Application` factory that creates a package using the configuration array provided at `dot_console` key. An console application needs a name, version, route configuration, console instance and dispatcher.
+The first thing this package offers, is the `Dot\Console\Application` factory that creates a package using the configuration array provided at `dot_console` key. An console application needs a name, version, route configuration, console instance and dispatcher.
 You can provide a configuration file for the console application in the following format
 ```php
 return [
@@ -78,7 +78,7 @@ return [
 The second thing is an abstract class that you commands should extend. This class forces the `__invoke` method with the proper parameter definition that defines console commands.
 Commands must be invokable classes with the following signature:
 ```php
-public function __invoke(Route $route, AdapterInterface $console)
+public function __invoke(RouteCollector $route, AdapterInterface $console)
 ```
 
 Command classes are pulled from the container, so you might inject your commands with dependencies.
@@ -90,7 +90,7 @@ Command classes are pulled from the container, so you might inject your commands
 
 use Dot\Console\Command\AbstractCommand;
 use Laminas\Console\Adapter\AdapterInterface;
-use ZF\Console\Route;
+use Dot\Console\RouteCollector as Route;
 
 class HelloCommand extends AbstractCommand
 {
@@ -133,7 +133,7 @@ In command line, go to your project's root directory and type the following comm
 $ php ./bin/console.php hello
 ```
 
-For a complete documentation you can follow  [zf-console](https://github.com/zfcampus/zf-console). Anything there related to commands are applicable to this package too.
+For a complete documentation you can follow  [laminas-console](https://github.com/laminas/laminas-console). Anything there related to commands are applicable to this package too.
 
 ## License
 MIT
