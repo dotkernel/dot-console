@@ -1,7 +1,8 @@
 <?php
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see https://github.com/dotkernel/frontend/ for the canonical source repository
+ * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
+ * @license https://github.com/dotkernel/frontend/blob/master/LICENSE.md MIT License
  */
 
 namespace Dot\Console;
