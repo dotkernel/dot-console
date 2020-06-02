@@ -67,7 +67,7 @@ You can provide a configuration file for the console application in the followin
 return [
     'dot_console' => [
         'name' => 'Console Name',
-        'version' => '1.0.0',
+        'version' => '3.0.0',
 
         'commands' => [
             //...
