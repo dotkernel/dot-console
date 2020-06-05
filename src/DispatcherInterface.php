@@ -1,14 +1,8 @@
 <?php
-/**
- * @see https://github.com/dotkernel/frontend/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/frontend/blob/master/LICENSE.md MIT License
- */
 
 namespace Dot\Console;
 
 use Laminas\Console\Adapter\AdapterInterface as ConsoleAdapter;
-use Laminas\Console\RouteMatcher\RouteMatcherInterface;
 
 /**
  * Interface DispatcherInterface
@@ -16,13 +10,11 @@ use Laminas\Console\RouteMatcher\RouteMatcherInterface;
  */
 interface DispatcherInterface
 {
+
     /**
-     * Map a command name to its handler.
-     *
-     * @param string $command
-     * @param callable|string $command A callable command, or a string service
-     *     or class name to use as a handler.
-     * @return self Should implement a fluent interface.
+     * @param $command
+     * @param $callable
+     * @return mixed
      */
     public function map($command, $callable);
 

@@ -1,15 +1,8 @@
 <?php
-/**
- * @see https://github.com/dotkernel/frontend/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/frontend/blob/master/LICENSE.md MIT License
- */
 
 namespace Dot\Console;
 
 use InvalidArgumentException;
-use Laminas\Console\RouteMatcher\DefaultRouteMatcher;
-use Laminas\Console\RouteMatcher\RouteMatcherInterface;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Laminas\Console\Adapter\AdapterInterface as ConsoleAdapter;
@@ -25,14 +18,14 @@ class Dispatcher implements DispatcherInterface
     /**
      * @var array
      */
-    protected $commandMap = [];
+    protected array $commandMap = [];
 
     /**
      * Container from which to pull command services when dispatching.
      *
      * @var null|ContainerInterface
      */
-    protected $container;
+    protected ?ContainerInterface $container;
 
     /**
      * @param null|ContainerInterface $container Container from which to pull
@@ -91,7 +84,7 @@ class Dispatcher implements DispatcherInterface
      */
     public function dispatch($args, RouteCollector $route, ConsoleAdapter $console)
     {
-        $name = $route->getCutomRoute($args[0]);
+        $name = $route->getCustomRoute($args[0]);
         if (! isset($this->commandMap[$name])) {
             $console->writeLine('');
             $console->writeLine(sprintf('Unhandled command "%s" invoked', $name), Color::WHITE, Color::RED);

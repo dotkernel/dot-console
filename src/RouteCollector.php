@@ -1,9 +1,4 @@
 <?php
-/**
- * @see https://github.com/dotkernel/frontend/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/frontend/blob/master/LICENSE.md MIT License
- */
 
 namespace Dot\Console;
 
@@ -18,13 +13,18 @@ use Laminas\Filter\FilterInterface;
 use Laminas\Validator\Callback as CallbackValidator;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Console\RouteMatcher\DefaultRouteMatcher as Route;
+use Traversable;
 
+/**
+ * Class RouteCollector
+ * @package Dot\Console
+ */
 class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterface
 {
     /**
      * @var array
      */
-    protected $routes = [];
+    protected array $routes = [];
 
     /**
      * Implement Countable
@@ -39,12 +39,10 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
     /**
      * @var null|array
      */
-    protected $matches;
-    
+    protected ?array $matches;
+
     /**
-     * Implement IteratorAggregate
-     *
-     * @return SplStack
+     * @return ArrayIterator|Traversable
      */
     public function getIterator()
     {
@@ -53,7 +51,8 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
 
     /**
      * @param Route $route
-     * @return self
+     * @param $name
+     * @return $this
      */
     public function addRoute(Route $route, $name)
     {
@@ -64,12 +63,8 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
     }
 
     /**
-     * @param string $route
-     * @param array $constraints
-     * @param array $defaults
-     * @param array $aliases
-     * @param null|array $filters
-     * @param null|array $validators
+     * @param array $spec
+     * @return $this
      */
     public function addRouteSpec(array $spec)
     {
@@ -102,15 +97,6 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
         $validators         = (isset($spec['validators']) && is_array($spec['validators']))
             ? $spec['validators']
             : null;
-        $description        = (isset($spec['description']) && is_string($spec['description']))
-            ? $spec['description']
-            : '';
-        $shortDescription   = (isset($spec['short_description']) && is_string($spec['short_description']))
-            ? $spec['short_description']
-            : '';
-        $optionsDescription = (isset($spec['options_descriptions']) && is_array($spec['options_descriptions']))
-            ? $spec['options_descriptions']
-            : [];
 
         $filters    = $this->prepareFilters($filters);
         $validators = $this->prepareValidators($validators);
@@ -119,26 +105,6 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
         $route = new Route($routeString, $constraints, $defaults, $aliases, $filters, $validators);
 
         $this->addRoute($route, $name);
-        return $this;
-    }
-    
-    
-
-    /**
-     * @param String $name
-     * @return self
-     * @throws DomainException if the provided route does not exist
-     */
-    public function removeRoute($name)
-    {
-        if (! isset($this->routes[$name])) {
-            throw new DomainException(sprintf(
-                'Failed removing route by name %s; the route by that name has not been registered',
-                $name
-            ));
-        }
-
-        unset($this->routes[$name]);
         return $this;
     }
 
@@ -168,12 +134,12 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
     }
 
     /**
-     * Retrieve a cutom named route
+     * Retrieve a custom named route
      *
      * @param  string $name
-     * @return null|Route
+     * @return null|string
      */
-    public function getCutomRoute($name)
+    public function getCustomRoute($name)
     {
         foreach ($this->routes as $route => $content) {
             $extractor = explode(' ', $route);
@@ -254,11 +220,6 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
     /**
      * Prepare filters
      *
-     * If a filter is a class name, instantiate it.
-     *
-     * If a filter is a callback, casts to Callback filter.
-     *
-     * If the filter is not valid, raises an exception.
      *
      * @param  null|array $filters
      * @return array|null
@@ -286,7 +247,7 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
             }
 
             throw new DomainException(sprintf(
-                'Invalid filter provided for "%s"; expected Callable or Zend\Filter\FilterInterface, received "%s"',
+                'Invalid filter provided for "%s"; expected Callable or Laminas\Filter\FilterInterface, received "%s"',
                 $name,
                 $this->getType($filter)
             ));
@@ -298,11 +259,6 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
     /**
      * Prepare validators
      *
-     * If a validator is a class name, instantiate it.
-     *
-     * If a validator is a callback, casts to Callback validator.
-     *
-     * If the validator is not valid, raises an exception.
      *
      * @param  array $validators
      * @return array|null
@@ -331,7 +287,7 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
 
             throw new DomainException(sprintf(
                 'Invalid validator provided for "%s"; expected Callable or '
-                . 'Zend\Validator\ValidatorInterface, received "%s"',
+                . 'Laminas\Validator\ValidatorInterface, received "%s"',
                 $name,
                 $this->getType($validator)
             ));
@@ -364,10 +320,6 @@ class RouteCollector implements Countable, IteratorAggregate, RouteMatcherInterf
 
     /**
      * Prepend the route with the command
-     *
-     * If the route does not start with the command already, and the
-     * `prepend_command_to_route` flag has not been toggled off, then prepend
-     * the command to the route and return it.
      *
      * @param string $command
      * @param string $route
