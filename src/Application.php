@@ -39,12 +39,6 @@ class Application
      */
     protected $dispatcher;
 
-
-    /**
-     * @var null|string|callable
-     */
-    protected $footer;
-
     /**
      * @var string
      */
@@ -146,15 +140,13 @@ class Application
 
         try {
             $result = $this->processRun($args);
-            $this->errorHandle->process($result);
+            return $result;
         } catch (Exception $e) {
             $exception = "Dot-Console Exception on line :" . $e->getLine() . " ,Message:" . $e->getMessage() . " ,File:" . $e->getFile();
             $this->logger->log(Logger::ERR, $exception);
 
             return $exception;
         }
-
-        return $result;
     }
 
     /**
@@ -202,7 +194,7 @@ class Application
             $this->showMessage($this->banner);
         }
 
-        return $this->dispatcher->dispatch($args, $this->routeCollection, $this->console, $this->errorHandle);
+        return $this->dispatcher->dispatch($args, $this->routeCollection, $this->console);
     }
 
     /**
