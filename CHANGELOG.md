@@ -1,3 +1,24 @@
+## 3.1.0 - 2020-11-04
+
+### Changed
+* Composer 2 compatibility.
+* Update composer.json to require version 2 of laminas/laminas-dependency-plugin to be Composer 2 compatible.
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* bump min version of laminas/laminas-dependency-plugin
+* bump min version of dotkernel/dot-log
+* bump min version of dot-errorhandler
+
+
 ## 2.0.0 - 2020-01-30
 
 ### Changed
