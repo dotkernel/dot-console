@@ -142,6 +142,7 @@ Update the console configuration to include this command
     ],
 ]
 //...
+```
 Please note that the content of:
 - `description` is displayed when the command is executed
 - `short_description` is displayed when the list of available commands is executed or getting help for a specific command
