@@ -1,24 +1,25 @@
 {
     "name": "dotkernel/dot-console",
-    "description": "DotKernel component for creating console applications based on laminas-console",
-    "authors": [
-        {
-            "name": "DotKernel Team",
-            "email": "team@dotkernel.com"
-        }
-    ],
     "type": "library",
+    "description": "DotKernel component for creating console applications based on laminas-console",
     "license": "MIT",
+    "homepage": "https://github.com/dotkernel/dot-console",
     "keywords": [
         "console",
         "dotkernel",
         "laminas",
         "mezzio"
     ],
+    "authors": [
+        {
+            "name": "DotKernel Team",
+            "email": "team@dotkernel.com"
+        }
+    ],
     "require": {
         "php": "^7.4",
-        "dotkernel/dot-log": "^3.0",
-        "dotkernel/dot-errorhandler": "^3.0",
+        "dotkernel/dot-log": "^3.1",
+        "dotkernel/dot-errorhandler": "^3.1",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-console": "^2.8",
         "laminas/laminas-dependency-plugin": "^2.0"
@@ -35,12 +36,6 @@
     "autoload-dev": {
         "psr-4": {
             "DotTest\\Console\\": "tests"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0-dev",
-            "dev-develop": "3.1-dev"
         }
     }
 }
