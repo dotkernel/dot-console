@@ -125,6 +125,23 @@ Update the console configuration to include this command
 ]
 //...
 ```
+#### Add custom parameters to config
+```php
+//...
+'commands' => [
+    [
+        'name' => 'hello',
+        'route' => '[--action=] [--param_one=] [--...=]',
+        'description' => 'Hello, World! command full description',
+        'short_description' => 'Hello, World! command short description.',
+        'options_descriptions' => [
+            '--action' => 'Target action.',
+            '--param_one'  => 'Parameter one description.'
+        ],
+        'handler' => HelloCommand::class
+    ],
+]
+//...
 Please note that the content of:
 - `description` is displayed when the command is executed
 - `short_description` is displayed when the list of available commands is executed or getting help for a specific command
