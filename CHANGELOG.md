@@ -1,3 +1,25 @@
+## 3.1.1 - 2020-11-12
+
+### Changed
+* Update composer.json to require version >= 2.1 of laminas/laminas-dependency-plugin by default.
+* Dot/Console/ApplicationFactory
+* Dot/Console/Application
+* bin/console.php
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Dot/Console/ApplicationFactory clean-up
+* Dot/Console/Application clean-up
+* bin/console.php application runner
+
 ## 3.1.0 - 2020-11-04
 
 ### Changed

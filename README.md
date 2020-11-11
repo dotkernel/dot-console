@@ -21,13 +21,18 @@ Next, register the package's `ConfigProvider` to your application config. If can
 ### Configuration and Usage
 You should create a bootstrap file in your project, similar to `index.php`, that will be called from the command line to start console commands. We advise you to create a `bin` folder in your project's root folder. Here you can create a `console.php` file with the following content.
 ```php
+<?php
+
 /**
  * Console application bootstrap file
  */
+
 use Dot\Console\Application;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
+
+const DOT_CONSOLE_EXCEPTION_MESSAGE = "Dot-Console Exception on line : %s, Message: %s, File: %s %s";
 
 /**
  * Self-called anonymous function that creates its own scope and keep the global namespace clean.
@@ -38,9 +43,12 @@ call_user_func(function () {
 
     /** @var Application $app */
     $app = $container->get(Application::class);
-
-    $exit = $app->run();
-    exit($exit);
+    try {
+        $app->run();
+    } catch (Exception $e) {
+        echo sprintf(DOT_CONSOLE_EXCEPTION_MESSAGE, $e->getLine(), $e->getMessage(), $e->getFile(), PHP_EOL);
+    }
+    exit(0);
 });
 ```
 

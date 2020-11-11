@@ -10,7 +10,6 @@ use Laminas\Console\Adapter\AdapterInterface as Console;
 use Laminas\Console\Console as DefaultConsole;
 use Laminas\Console\ColorInterface as Color;
 use Laminas\Log\Logger;
-use Exception;
 
 /**
  * Create and execute console applications.
@@ -52,7 +51,7 @@ class Application
     /**
      * @var ErrorHandlerInterface
      */
-    protected ErrorHandlerInterface $errorHandle;
+    protected ErrorHandlerInterface $errorHandler;
 
     /**
      * @var string
@@ -84,13 +83,13 @@ class Application
      * @param DispatcherInterface $dispatcher
      */
     public function __construct(
-        $name,
-        $version,
-        $routes,
-        Console $console = null,
-        DispatcherInterface $dispatcher = null,
+        string $name,
+        string $version,
+        array $routes,
         Logger $logger,
-        ErrorHandlerInterface $errorHandle
+        ErrorHandlerInterface $errorHandler,
+        Console $console = null,
+        DispatcherInterface $dispatcher = null
     ) {
         if (! is_array($routes) && ! $routes instanceof Traversable) {
             throw new InvalidArgumentException('Routes must be provided as an array or Traversable object');
@@ -98,7 +97,7 @@ class Application
 
         $this->name       = $name;
         $this->version    = $version;
-        $this->errorHandle    = $errorHandle;
+        $this->errorHandler    = $errorHandler;
         $this->logger = $logger;
 
         if (null === $console) {
@@ -130,7 +129,6 @@ class Application
      */
     public function run(array $args = null)
     {
-
         $this->setProcessTitle();
 
         if ($args === null) {
@@ -138,15 +136,7 @@ class Application
             $args = array_slice($argv, 1);
         }
 
-        try {
-            $result = $this->processRun($args);
-            return $result;
-        } catch (Exception $e) {
-            $exception = "Dot-Console Exception on line :" . $e->getLine() . " ,Message:" . $e->getMessage() . " ,File:" . $e->getFile();
-            $this->logger->log(Logger::ERR, $exception);
-
-            return $exception;
-        }
+        return $this->processRun($args);
     }
 
     /**

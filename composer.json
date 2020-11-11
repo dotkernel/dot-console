@@ -22,7 +22,7 @@
         "dotkernel/dot-errorhandler": "^3.1",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-console": "^2.8",
-        "laminas/laminas-dependency-plugin": "^2.0"
+        "laminas/laminas-dependency-plugin": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.1",
