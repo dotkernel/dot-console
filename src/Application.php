@@ -10,6 +10,7 @@ use Laminas\Console\Adapter\AdapterInterface as Console;
 use Laminas\Console\Console as DefaultConsole;
 use Laminas\Console\ColorInterface as Color;
 use Laminas\Log\Logger;
+use Exception;
 
 /**
  * Create and execute console applications.
@@ -44,16 +45,6 @@ class Application
     protected string $name;
 
     /**
-     * @var Logger
-     */
-    protected Logger $logger;
-
-    /**
-     * @var ErrorHandlerInterface
-     */
-    protected ErrorHandlerInterface $errorHandler;
-
-    /**
      * @var string
      */
     protected string $commandName;
@@ -71,23 +62,27 @@ class Application
     /**
      * @var bool
      */
+    protected bool $showVersion;
+
+    /**
+     * @var bool
+     */
     protected bool $bannerDisabledForUserCommands = false;
 
     /**
-     * Initialize the application
-     *
+     * Application constructor.
      * @param string $name
      * @param string $version
-     * @param array|Traversable $routes
-     * @param Console $console
-     * @param DispatcherInterface $dispatcher
+     * @param array $routes
+     * @param bool $showVersion
+     * @param Console|null $console
+     * @param DispatcherInterface|null $dispatcher
      */
     public function __construct(
         string $name,
         string $version,
         array $routes,
-        Logger $logger,
-        ErrorHandlerInterface $errorHandler,
+        bool $showVersion,
         Console $console = null,
         DispatcherInterface $dispatcher = null
     ) {
@@ -97,8 +92,7 @@ class Application
 
         $this->name       = $name;
         $this->version    = $version;
-        $this->errorHandler    = $errorHandler;
-        $this->logger = $logger;
+        $this->showVersion = $showVersion;
 
         if (null === $console) {
             $console = DefaultConsole::getInstance();
@@ -117,8 +111,9 @@ class Application
 
         $this->setRoutes($routes);
 
-        $this->showVersion($console);
-
+        if (true === $showVersion) {
+            $this->showVersion($console);
+        }
     }
 
     /**
@@ -304,14 +299,9 @@ class Application
      * @param Console $console
      * @return int
      */
-    public function showVersion(Console $console)
+    public function showVersion(Console $console): int
     {
-        $console->writeLine(
-            $console->colorize($this->name . ',', Color::GREEN)
-            . ' version '
-            . $console->colorize($this->version, Color::BLUE)
-        );
-        $console->writeLine('');
+        $console->writeLine(sprintf("%s, version %s %s", $this->name, $this->version, PHP_EOL));
         return 0;
     }
 }

@@ -14,6 +14,8 @@ use Dot\Console\Dispatcher;
 use Dot\ErrorHandler\ErrorHandlerInterface;
 use Psr\Container\ContainerInterface;
 use Laminas\Console\Console;
+use Exception;
+
 /**
  * Class ApplicationFactory
  * @package Dot\Console\Factory
@@ -26,12 +28,14 @@ class ApplicationFactory
      */
     public function __invoke(ContainerInterface $container): Application
     {
+        if (! is_bool($container->get('config')['dot_console']['showVersion'])) {
+            throw new Exception("Param : 'showVersion' must be a boolean value.");
+        }
         return new Application(
             $container->get('config')['dot_console']['name'],
             $container->get('config')['dot_console']['version'],
             $container->get('config')['dot_console']['commands'],
-            $container->get('dot-log.my_logger'),
-            $container->get(ErrorHandlerInterface::class),
+            $container->get('config')['dot_console']['showVersion'],
             Console::getInstance(),
             new Dispatcher($container)
         );
