@@ -31,11 +31,15 @@ class ApplicationFactory
         if (! is_bool($container->get('config')['dot_console']['showVersion'])) {
             throw new Exception("Param : 'showVersion' must be a boolean value.");
         }
+        if (! is_bool($container->get('config')['dot_console']['lock'])) {
+            throw new Exception("Param : 'lock' must be a boolean value.");
+        }
         return new Application(
             $container->get('config')['dot_console']['name'],
             $container->get('config')['dot_console']['version'],
             $container->get('config')['dot_console']['commands'],
             $container->get('config')['dot_console']['showVersion'],
+            $container->get('config')['dot_console']['lock'],
             Console::getInstance(),
             new Dispatcher($container)
         );

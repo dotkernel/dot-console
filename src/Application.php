@@ -67,6 +67,11 @@ class Application
     /**
      * @var bool
      */
+    protected bool $lock;
+
+    /**
+     * @var bool
+     */
     protected bool $bannerDisabledForUserCommands = false;
 
     /**
@@ -75,6 +80,7 @@ class Application
      * @param string $version
      * @param array $routes
      * @param bool $showVersion
+     * @param bool $lock
      * @param Console|null $console
      * @param DispatcherInterface|null $dispatcher
      */
@@ -83,6 +89,7 @@ class Application
         string $version,
         array $routes,
         bool $showVersion,
+        bool $lock,
         Console $console = null,
         DispatcherInterface $dispatcher = null
     ) {
@@ -93,6 +100,7 @@ class Application
         $this->name       = $name;
         $this->version    = $version;
         $this->showVersion = $showVersion;
+        $this->lock = $lock;
 
         if (null === $console) {
             $console = DefaultConsole::getInstance();
@@ -107,8 +115,6 @@ class Application
         $this->dispatcher = $dispatcher;
 
         $this->routeCollection = $routeCollection = new RouteCollector();
-        $this->setRoutes($routes);
-
         $this->setRoutes($routes);
 
         if (true === $showVersion) {
@@ -129,6 +135,22 @@ class Application
         if ($args === null) {
             global $argv;
             $args = array_slice($argv, 1);
+        }
+        if ($this->lock) {
+            $cwd = getcwd();
+            if (! is_dir($cwd . '/data/lock')) {
+                mkdir($cwd . '/data/lock');
+            }
+
+            $lockFile = sprintf('%s/data/lock/%s.lock', $cwd, $args[0] . '-cron');
+            $fp = fopen($lockFile, "w+");
+            if (! flock($fp, LOCK_EX | LOCK_NB, $wouldBlock)) {
+                if ($wouldBlock) {
+                    $this->console->writeLine('Another process holds the lock!');
+                    fclose($fp);
+                    return 0;
+                }
+            }
         }
 
         return $this->processRun($args);

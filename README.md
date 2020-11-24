@@ -26,13 +26,10 @@ You should create a bootstrap file in your project, similar to `index.php`, that
 /**
  * Console application bootstrap file
  */
-
 use Dot\Console\Application;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
-
-const DOT_CONSOLE_EXCEPTION_MESSAGE = "Dot-Console Exception on line : %s, Message: %s, File: %s %s";
 
 /**
  * Self-called anonymous function that creates its own scope and keep the global namespace clean.
@@ -43,11 +40,7 @@ call_user_func(function () {
 
     /** @var Application $app */
     $app = $container->get(Application::class);
-    try {
-        $app->run();
-    } catch (Exception $e) {
-        echo sprintf(DOT_CONSOLE_EXCEPTION_MESSAGE, $e->getLine(), $e->getMessage(), $e->getFile(), PHP_EOL);
-    }
+    $app->run();
     exit(0);
 });
 ```

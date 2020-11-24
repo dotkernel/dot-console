@@ -26,7 +26,8 @@ class ConfigProvider
             'dot_console' => [
                 'version' => '3.0.0',
                 'name' => 'DotKernel Console',
-                'showVersion' => true,
+                'showVersion' => false,
+                'lock' => false,
                 'commands' => [
 
                 ],
