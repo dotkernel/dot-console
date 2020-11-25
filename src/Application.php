@@ -10,7 +10,6 @@ use Laminas\Console\Adapter\AdapterInterface as Console;
 use Laminas\Console\Console as DefaultConsole;
 use Laminas\Console\ColorInterface as Color;
 use Laminas\Log\Logger;
-use Exception;
 
 /**
  * Create and execute console applications.

@@ -18,8 +18,6 @@
     ],
     "require": {
         "php": "^7.4",
-        "dotkernel/dot-log": "^3.1",
-        "dotkernel/dot-errorhandler": "^3.1",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-console": "^2.8",
         "laminas/laminas-dependency-plugin": "^2.1"
@@ -31,11 +29,6 @@
     "autoload": {
         "psr-4": {
             "Dot\\Console\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DotTest\\Console\\": "tests"
         }
     }
 }
