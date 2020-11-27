@@ -1,3 +1,23 @@
+## 3.2.0 - 2020-11-27
+
+### Changed
+* Added the option to lock file when a console is running, to prevent concurent console run
+* Added the option to output version of console 
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* dot_log integration 
+* dot_error-handler integration
+* output colors
+
+### Fixed
+* Nothing
+
 ## 3.1.1 - 2020-11-12
 
 ### Changed
