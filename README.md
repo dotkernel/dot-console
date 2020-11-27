@@ -4,10 +4,8 @@ DotKernel component to build console applications based on laminas-console
 
 ### Requirements
 - PHP >= 7.4
-- laminas/laminas-servicemanager >= 3.3,
+- laminas/laminas-servicemanager >= 3.4,
 - laminas/laminas-console >= 2.8
-- dotkernel/dot-errorhandler >= 3.1,
-- dotkernel/dot-log >= 3.1
 
 
 ### Installation
@@ -70,8 +68,9 @@ You can provide a configuration file for the console application in the followin
 return [
     'dot_console' => [
         'name' => 'Console Name',
-        'version' => '3.0.0',
-
+        'version' => '3.2.0',
+        'showVersion' => true,
+        'lock' => true,
         'commands' => [
             //...
         ]
