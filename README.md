@@ -4,10 +4,8 @@ DotKernel component to build console applications based on laminas-console
 
 ### Requirements
 - PHP >= 7.4
-- laminas/laminas-servicemanager >= 3.3,
+- laminas/laminas-servicemanager >= 3.4,
 - laminas/laminas-console >= 2.8
-- dotkernel/dot-errorhandler >= 3.1,
-- dotkernel/dot-log >= 3.1
 
 
 ### Installation
@@ -21,6 +19,8 @@ Next, register the package's `ConfigProvider` to your application config. If can
 ### Configuration and Usage
 You should create a bootstrap file in your project, similar to `index.php`, that will be called from the command line to start console commands. We advise you to create a `bin` folder in your project's root folder. Here you can create a `console.php` file with the following content.
 ```php
+<?php
+
 /**
  * Console application bootstrap file
  */
@@ -38,9 +38,8 @@ call_user_func(function () {
 
     /** @var Application $app */
     $app = $container->get(Application::class);
-
-    $exit = $app->run();
-    exit($exit);
+    $app->run();
+    exit(0);
 });
 ```
 
@@ -69,8 +68,9 @@ You can provide a configuration file for the console application in the followin
 return [
     'dot_console' => [
         'name' => 'Console Name',
-        'version' => '3.0.0',
-
+        'version' => '3.2.0',
+        'showVersion' => true,
+        'lock' => true,
         'commands' => [
             //...
         ]

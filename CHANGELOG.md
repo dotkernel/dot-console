@@ -1,3 +1,45 @@
+## 3.2.0 - 2020-11-27
+
+### Changed
+* Added the option to lock file when a console is running, to prevent concurent console run
+* Added the option to output version of console 
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* dot_log integration 
+* dot_error-handler integration
+* output colors
+
+### Fixed
+* Nothing
+
+## 3.1.1 - 2020-11-12
+
+### Changed
+* Update composer.json to require version >= 2.1 of laminas/laminas-dependency-plugin by default.
+* Dot/Console/ApplicationFactory
+* Dot/Console/Application
+* bin/console.php
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Dot/Console/ApplicationFactory clean-up
+* Dot/Console/Application clean-up
+* bin/console.php application runner
+
 ## 3.1.0 - 2020-11-04
 
 ### Changed

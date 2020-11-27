@@ -10,7 +10,6 @@ use Laminas\Console\Adapter\AdapterInterface as Console;
 use Laminas\Console\Console as DefaultConsole;
 use Laminas\Console\ColorInterface as Color;
 use Laminas\Log\Logger;
-use Exception;
 
 /**
  * Create and execute console applications.
@@ -45,16 +44,6 @@ class Application
     protected string $name;
 
     /**
-     * @var Logger
-     */
-    protected Logger $logger;
-
-    /**
-     * @var ErrorHandlerInterface
-     */
-    protected ErrorHandlerInterface $errorHandle;
-
-    /**
      * @var string
      */
     protected string $commandName;
@@ -72,25 +61,36 @@ class Application
     /**
      * @var bool
      */
+    protected bool $showVersion;
+
+    /**
+     * @var bool
+     */
+    protected bool $lock;
+
+    /**
+     * @var bool
+     */
     protected bool $bannerDisabledForUserCommands = false;
 
     /**
-     * Initialize the application
-     *
+     * Application constructor.
      * @param string $name
      * @param string $version
-     * @param array|Traversable $routes
-     * @param Console $console
-     * @param DispatcherInterface $dispatcher
+     * @param array $routes
+     * @param bool $showVersion
+     * @param bool $lock
+     * @param Console|null $console
+     * @param DispatcherInterface|null $dispatcher
      */
     public function __construct(
-        $name,
-        $version,
-        $routes,
+        string $name,
+        string $version,
+        array $routes,
+        bool $showVersion,
+        bool $lock,
         Console $console = null,
-        DispatcherInterface $dispatcher = null,
-        Logger $logger,
-        ErrorHandlerInterface $errorHandle
+        DispatcherInterface $dispatcher = null
     ) {
         if (! is_array($routes) && ! $routes instanceof Traversable) {
             throw new InvalidArgumentException('Routes must be provided as an array or Traversable object');
@@ -98,8 +98,8 @@ class Application
 
         $this->name       = $name;
         $this->version    = $version;
-        $this->errorHandle    = $errorHandle;
-        $this->logger = $logger;
+        $this->showVersion = $showVersion;
+        $this->lock = $lock;
 
         if (null === $console) {
             $console = DefaultConsole::getInstance();
@@ -116,10 +116,9 @@ class Application
         $this->routeCollection = $routeCollection = new RouteCollector();
         $this->setRoutes($routes);
 
-        $this->setRoutes($routes);
-
-        $this->showVersion($console);
-
+        if (true === $showVersion) {
+            $this->showVersion($console);
+        }
     }
 
     /**
@@ -130,23 +129,30 @@ class Application
      */
     public function run(array $args = null)
     {
-
         $this->setProcessTitle();
 
         if ($args === null) {
             global $argv;
             $args = array_slice($argv, 1);
         }
+        if ($this->lock) {
+            $cwd = getcwd();
+            if (! is_dir($cwd . '/data/lock')) {
+                mkdir($cwd . '/data/lock');
+            }
 
-        try {
-            $result = $this->processRun($args);
-            return $result;
-        } catch (Exception $e) {
-            $exception = "Dot-Console Exception on line :" . $e->getLine() . " ,Message:" . $e->getMessage() . " ,File:" . $e->getFile();
-            $this->logger->log(Logger::ERR, $exception);
-
-            return $exception;
+            $lockFile = sprintf('%s/data/lock/%s.lock', $cwd, $args[0] . '-cron');
+            $fp = fopen($lockFile, "w+");
+            if (! flock($fp, LOCK_EX | LOCK_NB, $wouldBlock)) {
+                if ($wouldBlock) {
+                    $this->console->writeLine('Another process holds the lock!');
+                    fclose($fp);
+                    return 0;
+                }
+            }
         }
+
+        return $this->processRun($args);
     }
 
     /**
@@ -314,14 +320,9 @@ class Application
      * @param Console $console
      * @return int
      */
-    public function showVersion(Console $console)
+    public function showVersion(Console $console): int
     {
-        $console->writeLine(
-            $console->colorize($this->name . ',', Color::GREEN)
-            . ' version '
-            . $console->colorize($this->version, Color::BLUE)
-        );
-        $console->writeLine('');
+        $console->writeLine(sprintf("%s, version %s %s", $this->name, $this->version, PHP_EOL));
         return 0;
     }
 }

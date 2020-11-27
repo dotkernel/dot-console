@@ -24,11 +24,13 @@ class ConfigProvider
             'dependencies' => $this->getDependencies(),
 
             'dot_console' => [
-                'version' => '3.0.0',
+                'version' => '3.2.0',
                 'name' => 'DotKernel Console',
+                'showVersion' => true,
+                'lock' => true,
                 'commands' => [
 
-                ]
+                ],
             ]
         ];
     }
