@@ -135,22 +135,6 @@ class Application
             global $argv;
             $args = array_slice($argv, 1);
         }
-        if ($this->lock) {
-            $cwd = getcwd();
-            if (! is_dir($cwd . '/data/lock')) {
-                mkdir($cwd . '/data/lock');
-            }
-
-            $lockFile = sprintf('%s/data/lock/%s.lock', $cwd, $args[0] . '-cron');
-            $fp = fopen($lockFile, "w+");
-            if (! flock($fp, LOCK_EX | LOCK_NB, $wouldBlock)) {
-                if ($wouldBlock) {
-                    $this->console->writeLine('Another process holds the lock!');
-                    fclose($fp);
-                    return 0;
-                }
-            }
-        }
 
         return $this->processRun($args);
     }
@@ -184,6 +168,23 @@ class Application
             $this->showMessage($this->banner);
             $this->showUsageMessage();
             return 0;
+        }
+
+        if ($this->lock) {
+            $cwd = getcwd();
+            if (! is_dir($cwd . '/data/lock')) {
+                mkdir($cwd . '/data/lock');
+            }
+
+            $lockFile = sprintf('%s/data/lock/%s.lock', $cwd, $args[0] . '-cron');
+            $fp = fopen($lockFile, "w+");
+            if (! flock($fp, LOCK_EX | LOCK_NB, $wouldBlock)) {
+                if ($wouldBlock) {
+                    $this->console->writeLine('Another process holds the lock!');
+                    fclose($fp);
+                    return 0;
+                }
+            }
         }
 
         $route = $this->routeCollection->match($args);

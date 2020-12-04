@@ -1,3 +1,20 @@
+## 3.2.1 - 2020-12-04
+
+### Changed
+* Dot\Console\Application.php 
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Throw a message when no argument provided.
+
 ## 3.2.0 - 2020-11-27
 
 ### Changed
