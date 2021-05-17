@@ -5,7 +5,7 @@
 
 DotKernel component to build console applications based on laminas-console
 
-# laminas-console
+# NOTE
 
 > **laminas-console** is **abandoned** and will receive no further development!
 >
