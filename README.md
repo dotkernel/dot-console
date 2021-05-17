@@ -1,6 +1,15 @@
 # dot-console
 
+![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/dot-console)
+[![GitHub license](https://img.shields.io/github/license/dotkernel/dot-console)](https://github.com/dotkernel/dot-console/LICENSE)
+
 DotKernel component to build console applications based on laminas-console
+
+# laminas-console
+
+> **laminas-console** is **abandoned** and will receive no further development!
+>
+> We recommend using [dotkernel/dot-cli](https://github.com/dotkernel/dot-cli).
 
 ### Requirements
 - PHP >= 7.4
